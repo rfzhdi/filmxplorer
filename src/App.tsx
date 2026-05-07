@@ -95,7 +95,46 @@ const App: React.FC = () => {
           )}
         </main>
       )}
-    </div>
+      
+    {/* --- Section Comment --- */}
+      <section className="mt-20 border-t border-gray-800 pt-10 max-w-2xl mx-auto">
+        <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+          <span className="text-red-600">|</span> Discussion
+        </h2>
+        
+        <form className="mb-10 group">
+          <textarea 
+            placeholder="What do you think about these movies?" 
+            className="w-full bg-gray-900 border border-gray-800 rounded-xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 transition-all min-h-[100px] mb-4"
+          />
+          <button 
+            type="submit" 
+            className="bg-white text-black font-bold py-2 px-6 rounded-full hover:bg-red-600 hover:text-white transition-all shadow-lg"
+          >
+            Post Comment
+          </button>
+        </form>
+
+        {/* Contoh Komentar
+        <div className="space-y-6">
+          <div className="bg-gray-900/50 p-4 rounded-lg border border-gray-800/50">
+            <p className="text-sm font-semibold text-red-500 mb-1">User123</p>
+            <p className="text-gray-400 text-sm">Wah, Filmxplorer ngebantu banget cari referensi film malam minggu!</p>
+          </div>
+        </div> */}
+      </section>
+
+      {/* --- Footer --- */}
+      <footer className="mt-20 py-10 border-t border-gray-800 text-center">
+        <p className="text-gray-600 text-sm italic">
+          Data provided by <span className="text-gray-400 font-semibold">TMDB API</span>
+        </p>
+        <p className="text-gray-500 text-xs mt-2">
+          &copy; {new Date().getFullYear()} Filmxplorer. Created by Rafi Zuhdi.
+        </p>
+      </footer>
+
+    </div> // Penutup app-container
   );
 };
 
