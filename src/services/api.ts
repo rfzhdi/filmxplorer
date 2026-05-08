@@ -20,5 +20,12 @@ export const searchMovies = async (query: string): Promise<Movie[]> => {
     return data.results;
 }
 
+// Ambil detail film berdasarkan ID
+export const getMovieDetails = async (id: string): Promise<any> => {
+  const response = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`);
+  if (!response.ok) throw new Error("Gagal mengambil detail film");
+  return await response.json();
+};
+
 // Helper buat bangun URL gambar
 export const getImageUrl = (path: string) => `${IMAGE_BASE_URL}${path}`;
