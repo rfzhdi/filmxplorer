@@ -1,0 +1,17 @@
+.footerContainer {
+  margin-top: 5rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid #1f2937;
+  text-align: center;
+}
+
+.copyrightText {
+  color: #6b7280;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.brandName {
+  color: #ef4444; /* Warna merah khas Filmxplorer */
+  font-weight: bold;
+}

@@ -2,17 +2,33 @@ import React from 'react';
 import type { Movie } from '../types/movie';
 import { getImageUrl } from '../services/api';
 import { Link } from 'react-router-dom';
+import { useWatchlist } from '../context/WatchlistContext';
 
 // Definisi tipe buat props yg diterima
 interface MovieCardProps {
   movie: Movie;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+const MovieCard: React.FC<{ movie: Movie }> = ({ movie }) => {
+  const { addToWatchlist, isStored, removeFromWatchlist } = useWatchlist();
+  
+  const inWatchlist = isStored(movie.id);
+
+  const handleWatchlist = (e: React.MouseEvent) => {
+    e.preventDefault(); // Mencegah navigasi ke halaman detail
+    inWatchlist ? removeFromWatchlist(movie.id) : addToWatchlist(movie);
+  };
+
   return (
     <Link to={`/movie/${movie.id}`}>
       <div className="group bg-gray-900 rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300 shadow-lg">
         <div className="relative aspect-[2\/3] overflow-hidden">
+        <button 
+        onClick={handleWatchlist}
+        className="absolute top-2 right-2 z-20 p-2 rounded-full bg-black/50 hover:bg-black"
+      >
+        {inWatchlist ? '❤️' : '🤍'}
+      </button>
           <img 
             src={movie.poster_path ? getImageUrl(movie.poster_path) : 'https://via.placeholder.com/500x750?text=No+Image'} 
             alt={movie.title} 

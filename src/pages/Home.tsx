@@ -123,16 +123,6 @@ const Home: React.FC = () => {
           </div>
         </div> */}
       </section>
-
-      {/* --- Footer --- */}
-      <footer className="mt-20 py-10 border-t border-gray-800 text-center">
-        <p className="text-gray-600 text-sm italic">
-          Data provided by <span className="text-gray-400 font-semibold">TMDB API</span>
-        </p>
-        <p className="text-gray-500 text-xs mt-2">
-          &copy; {new Date().getFullYear()} Filmxplorer. Created by Rafi Zuhdi.
-        </p>
-      </footer>
     </div>
   );
 };
