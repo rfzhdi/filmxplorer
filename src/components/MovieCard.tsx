@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 import { useWatchlist } from '../context/WatchlistContext';
 
 // Definisi tipe buat props yg diterima
-interface MovieCardProps {
+interface MovieCard {
   movie: Movie;
 }
 
-const MovieCard: React.FC<{ movie: Movie }> = ({ movie }) => {
+const MovieCard: React.FC<MovieCard> = ({ movie }) => {
   const { addToWatchlist, isStored, removeFromWatchlist } = useWatchlist();
   
   const inWatchlist = isStored(movie.id);

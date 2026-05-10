@@ -5,6 +5,7 @@ import { commentReducer } from '../reducers/commentReducer';
 import type { Movie } from '../types/movie';
 import CommentItem from '../components/CommentItem';
 import styled from 'styled-components';
+import { Loading } from '../components/Loading';
 
 const MovieDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Ambil ID dari URL
@@ -59,7 +60,7 @@ const MovieDetail: React.FC = () => {
     fetchDetail();
   }, [id]);
 
-  if (loading) return <div className="text-center bg-gray-950 py-20 text-gray-400">Loading details...</div>;
+  if (loading) return (<Loading />);
   if (!movie) return <div className="text-center bg-gray-950 py-20 text-red-500">Movie not found!</div>;
 
   return (

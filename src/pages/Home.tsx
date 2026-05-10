@@ -4,6 +4,7 @@ import { getPopularMovies, searchMovies } from '../services/api';
 import MovieCard from '../components/MovieCard';
 
 const Home: React.FC = () => {
+  // throw new Error("Cuma ngetes doang!");
   const [movies, setMovies] = useState<Movie[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
