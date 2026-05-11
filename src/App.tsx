@@ -5,6 +5,7 @@ import ErrorFallback from './components/ErrorFallback';
 import Loading from './components/Loading';
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Watchlist from './pages/Watchlist';
 
 const Home = lazy(() => import("./pages/Home"));
 const MovieDetail = lazy(() => import("./pages/MovieDetail"));
@@ -20,6 +21,7 @@ function App() {
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/watchlist" element={<Watchlist />} />
             <Route path="/movie/:id" element={<MovieDetail />} />
           </Routes>
         </Suspense>

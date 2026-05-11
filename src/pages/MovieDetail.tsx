@@ -29,6 +29,7 @@ const MovieDetail: React.FC = () => {
 
 // Styled Components
   const ActionButton = styled.button<{ $primary?: boolean }>`
+    margin-top: 100px;
     background-color: ${props => props.$primary ? '#dc2626' : 'transparent'};
     color: white; 
     padding: 12px 32px;
@@ -69,7 +70,7 @@ const MovieDetail: React.FC = () => {
       <div className="relative h-100 w-full">
         <img 
           src={movie.poster_path ? getImageUrl(movie.poster_path) : 'https://via.placeholder.com/500x750?text=No+Image'}
-          className="w-full h-full object-cover opacity-30 blur-sm"
+          className="w-full h-full object-cover opacity-20 blur-sm"
           alt="backdrop"
         />
         <div className="absolute inset-0 bg-linear-to-t from-gray-950 to-transparent"></div>
@@ -94,8 +95,8 @@ const MovieDetail: React.FC = () => {
           </div>
 
           {/* Info */}
-          <div className="flex-1">
-            <h1 className="text-5xl font-bold mb-4">{movie.title}</h1>
+          <div className="flex-1" id='judul'>
+            <h1>{movie.title}</h1>
             <div className="flex items-center gap-4 mb-6 text-gray-400">
               <span className="bg-red-600/20 text-red-500 px-3 py-1 rounded text-sm font-bold">
                 ⭐ {movie.vote_average.toFixed(1)}
