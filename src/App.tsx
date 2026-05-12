@@ -1,6 +1,7 @@
 import { Suspense, lazy} from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ErrorBoundary } from 'react-error-boundary';
+import Login from './pages/Login';
 import ErrorFallback from './components/ErrorFallback';
 import Loading from './components/Loading';
 import Navbar from "./components/Navbar";
@@ -20,7 +21,8 @@ function App() {
       >
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/watchlist" element={<Watchlist />} />
             <Route path="/movie/:id" element={<MovieDetail />} />
           </Routes>

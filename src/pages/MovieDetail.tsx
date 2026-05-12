@@ -6,10 +6,32 @@ import type { Movie } from '../types/movie';
 import CommentItem from '../components/CommentItem';
 import styled from 'styled-components';
 import { Loading } from '../components/Loading';
+import { useMovieWatchlist } from '../hooks/useMovieWatchlist';
 
-const MovieDetail: React.FC = () => {
+// Styled Components
+const ActionButton = styled.button<{ $primary?: boolean }>`
+  margin-top: 100px;
+  background-color: ${props => props.$primary ? '#dc2626' : 'transparent'};
+  color: white; 
+  padding: 12px 32px;
+  border-radius: 9999px;
+  font-weight: bold;
+  border: 2px solid #dc2626;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #b91c1c;
+    transform: scale(1.05);
+  }
+`;
+
+const MovieDetail: React.FC = () => {  
   const { id } = useParams<{ id: string }>(); // Ambil ID dari URL
   const navigate = useNavigate();
+
+  const { toggleWatchlist, isInWatchlist } = useMovieWatchlist();
+
   const [movie, setMovie] = useState<Movie | null>(null);
   const [loading, setLoading] = useState(true);
   const [comments, dispatch] = useReducer(commentReducer, []);
@@ -18,7 +40,6 @@ const MovieDetail: React.FC = () => {
   const handleAdd = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     if (!text.trim()) return;
-
     dispatch({ type: 'ADD_COMMENT', payload: text });
     setText("");
   }, [text]);
@@ -26,24 +47,6 @@ const MovieDetail: React.FC = () => {
   const handleDelete = useCallback((id: number) => {
     dispatch({ type: 'DELETE_COMMENT', payload: id });
   }, []);
-
-// Styled Components
-  const ActionButton = styled.button<{ $primary?: boolean }>`
-    margin-top: 100px;
-    background-color: ${props => props.$primary ? '#dc2626' : 'transparent'};
-    color: white; 
-    padding: 12px 32px;
-    border-radius: 9999px;
-    font-weight: bold;
-    border: 2px solid #dc2626;
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background-color: #b91c1c;
-      transform: scale(1.05);
-    }
-  `;
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -111,7 +114,9 @@ const MovieDetail: React.FC = () => {
               {movie.overview}
             </p>
 
-            <ActionButton className="m-6" $primary>Add to Watchlist</ActionButton>
+            <ActionButton onClick={() => toggleWatchlist(movie)}>
+              {isInWatchlist(movie.id) ? "Remove from Watchlist" : "Add to Watchlist"}
+            </ActionButton>
           </div>
         </div>
       </div>

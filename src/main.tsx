@@ -1,8 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Provider } from 'react-redux'
+import { store } from './store'
 import './index.css'
 import App from './App.tsx'
-import { WatchlistProvider } from './context/WatchlistContext.tsx'
+import { AuthProvider } from './context/AuthContext.tsx'
 
 // --- SIMULASI LOGIN ---
 // LOGIN
@@ -13,8 +15,10 @@ import { WatchlistProvider } from './context/WatchlistContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <WatchlistProvider>
-      <App />
-    </WatchlistProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </Provider>
   </StrictMode>
 )

@@ -2,7 +2,7 @@ import React from 'react';
 import type { Movie } from '../types/movie';
 import { getImageUrl } from '../services/api';
 import { Link } from 'react-router-dom';
-import { useWatchlist } from '../context/WatchlistContext';
+import { useMovieWatchlist } from '../hooks/useMovieWatchlist';
 
 // Definisi tipe buat props yg diterima
 interface MovieCard {
@@ -10,13 +10,14 @@ interface MovieCard {
 }
 
 const MovieCard: React.FC<MovieCard> = ({ movie }) => {
-  const { addToWatchlist, isStored, removeFromWatchlist } = useWatchlist();
+  const { isInWatchlist, toggleWatchlist } = useMovieWatchlist();
   
-  const inWatchlist = isStored(movie.id);
+  const inWatchlist = isInWatchlist(movie.id);
 
   const handleWatchlist = (e: React.MouseEvent) => {
-    e.preventDefault(); // Mencegah navigasi ke halaman detail
-    inWatchlist ? removeFromWatchlist(movie.id) : addToWatchlist(movie);
+    e.preventDefault();
+    e.stopPropagation();
+    toggleWatchlist(movie);
   };
 
   return (

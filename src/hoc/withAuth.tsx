@@ -1,15 +1,17 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-export function withAuth<P extends object>(WrappedComponent: React.ComponentType<P>) {
-    return (props: P) => {
-        const isAuthenticated = localStorage.getItem("isLoggedIn") === "true";
+const withAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
+  return (props: P) => {
+    const { isLoggedIn } = useAuth(); // Ambil status dari Context
 
-        if (!isAuthenticated) {
-            alert("Access Denied! Please login first.");
-            return <Navigate to="/" replace />;
-        }
+    if (!isLoggedIn) {
+      return <Navigate to="/" replace />;
+    }
 
-        return <WrappedComponent {...props} />;
-    };
-}
+    return <WrappedComponent {...props} />;
+  };
+};
+
+export default withAuth;

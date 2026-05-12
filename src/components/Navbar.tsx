@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useWatchlist } from '../context/WatchlistContext';
+import { useMovieWatchlist } from '../hooks/useMovieWatchlist';
 
 const Navbar: React.FC = () => {
-  const { watchlist } = useWatchlist();
+  const { watchlist } = useMovieWatchlist();
 
   return (
     <nav className="bg-gray-950 border-b border-gray-800 py-4 px-8 flex justify-between items-center sticky top-0 z-50">
@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
       </Link>
       
       <div className="flex gap-6 items-center">
-        <Link to="/" className="text-sm font-medium hover:text-red-500 transition-colors">Home</Link>
+        <Link to="/home" className="text-sm font-medium hover:text-red-500 transition-colors">Home</Link>
         <Link to="/watchlist" className="text-sm font-medium hover:text-red-500 transition-colors">
         Watchlist
         {watchlist.length > 0 && (

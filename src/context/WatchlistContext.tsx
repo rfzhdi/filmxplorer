@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { Movie } from '../types/movie';
 
@@ -34,11 +34,4 @@ export const WatchlistProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </WatchlistContext.Provider>
   );
-};
-
-// Penggunaan Custom Hook
-export const useWatchlist = () => {
-  const context = useContext(WatchlistContext);
-  if (!context) throw new Error("useWatchlist must be used within WatchlistProvider");
-  return context;
 };
