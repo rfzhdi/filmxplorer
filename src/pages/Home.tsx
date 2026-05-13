@@ -2,22 +2,28 @@ import React, { useState, useEffect } from 'react';
 import type { Movie } from '../types/movie';
 import { getPopularMovies, searchMovies } from '../services/api';
 import MovieCard from '../components/MovieCard';
+import { useSearchStore } from '../zustand/useSearchStore';
+import { useThemeStore } from '../zustand/useThemeStore';
 
 const Home: React.FC = () => {
   // throw new Error("Cuma ngetes doang!");
+  const { isDarkMode, toggleTheme } = useThemeStore();
+
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const { query, setQuery } = useSearchStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    handleFetchMovies();
-  }, []);
-
-  const handleFetchMovies = async () => {
+  // Fungsi untuk mengambil data (Populer atau Cari)
+  const handleFetchMovies = async (searchQuery?: string) => {
     try {
       setIsLoading(true);
-      const data = await getPopularMovies();
+      setError(null);
+      
+      const data = searchQuery 
+        ? await searchMovies(searchQuery) // Jika ada query, cari film
+        : await getPopularMovies();       // Jika kosong, ambil populer
+      
       setMovies(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Terjadi kesalahan");
@@ -26,36 +32,41 @@ const Home: React.FC = () => {
     }
   };
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!searchTerm.trim()) return;
+  useEffect(() => {
+    handleFetchMovies();
+  }, []);
 
-    try {
-      setIsLoading(true);
-      const results = await searchMovies(searchTerm);
-      setMovies(results);
-    } catch (err) {
-      setError("Gagal mencari film");
-    } finally {
-      setIsLoading(false);
-    }
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleFetchMovies(query); // Panggil API dengan query dari Zustand
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 px-4 md:px-8 py-6">
+    <div className={`min-h-screen px-4 md:px-8 py-6 ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors`}>
       {/* Navbar Section */}
       <header className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
         <h1 className="text-4xl font-bold bg-linear-to-r from-red-500 to-red-800 bg-clip-text text-transparent tracking-tighter">
           FILMXPLORER
         </h1>
+
+        <button 
+          onClick={toggleTheme}
+          className={`absolute left-148 px-3 py-1.5 rounded-xs font-bold transition-all ${
+            isDarkMode 
+              ? 'bg-white text-black hover:bg-gray-200' 
+              : 'bg-gray-900 text-white hover:bg-black'
+          }`}
+        >
+          {isDarkMode ? '☀️' : '🌙'}
+        </button>
         
-        <form onSubmit={handleSearch} className="relative w-full md:w-96 group">
+        <form onSubmit={handleSearchSubmit} className="relative w-full md:w-96 group">
           <input
             type="text"
             placeholder="Search films..."
             className="w-full bg-gray-900 border border-gray-800 text-sm rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-red-600 transition-all"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
           />
           <button 
             type="submit" 
@@ -88,8 +99,8 @@ const Home: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-20">
-              <p className="text-xl text-gray-500">Oops! Film "{searchTerm}" not found.</p>
-              <button onClick={handleFetchMovies} className="mt-4 text-red-500 hover:underline">
+              <p className="text-xl text-gray-500">Oops! Film "{query}" not found.</p>
+              <button onClick={() => handleFetchMovies()} className="mt-4 text-red-500 hover:underline">
                 Back to popular films.
               </button>
             </div>
