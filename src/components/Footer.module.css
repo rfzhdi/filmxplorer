@@ -1,9 +1,9 @@
 .footerContainer {
   margin-top: 0rem;
-  padding: 2rem 0;
+  padding: 1rem 0;
   border-top: 1px solid #1f2937;
   text-align: center;
-  background-color: #030712;
+  background-color: inherit;
 }
 
 .copyrightText {

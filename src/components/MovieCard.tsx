@@ -3,6 +3,7 @@ import type { Movie } from '../types/movie';
 import { getImageUrl } from '../services/api';
 import { Link } from 'react-router-dom';
 import { useMovieWatchlist } from '../hooks/useMovieWatchlist';
+import { useThemeStore } from '../zustand/useThemeStore';
 
 // Definisi tipe buat props yg diterima
 interface MovieCard {
@@ -11,7 +12,7 @@ interface MovieCard {
 
 const MovieCard: React.FC<MovieCard> = ({ movie }) => {
   const { isInWatchlist, toggleWatchlist } = useMovieWatchlist();
-  
+  const { isDarkMode } = useThemeStore();
   const inWatchlist = isInWatchlist(movie.id);
 
   const handleWatchlist = (e: React.MouseEvent) => {
@@ -51,7 +52,7 @@ const MovieCard: React.FC<MovieCard> = ({ movie }) => {
           <span className="text-xs text-yellow-500 flex items-center">
             ⭐ {movie.vote_average.toFixed(1)}
           </span>
-          <span className="text-[10px] text-gray-500 uppercase tracking-widest">
+          <span className={`text-[10px] ${isDarkMode ? 'text-gray-500' : 'text-gray-700'} uppercase tracking-widest`}>
             {movie.release_date ? movie.release_date.split('-')[0] : 'N/A'}
           </span>
         </div>

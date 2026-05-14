@@ -1,17 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useMovieWatchlist } from '../hooks/useMovieWatchlist';
+import { useThemeStore } from '../zustand/useThemeStore';
 
 const Navbar: React.FC = () => {
   const { watchlist } = useMovieWatchlist();
+  const { isDarkMode } = useThemeStore();
 
   return (
-    <nav className="bg-gray-950 border-b border-gray-800 py-4 px-8 flex justify-between items-center sticky top-0 z-50">
+    <nav className={`border-b border-gray-800 py-4 px-8 flex justify-between items-center sticky top-0 z-50 ${isDarkMode ? 'bg-gray-950' : 'bg-white'} transition-colors`}>
       <Link to="/" className="text-2xl font-bold bg-linear-to-r from-red-500 to-red-800 bg-clip-text text-transparent tracking-tighter">
         FILMXPLORER
       </Link>
       
-      <div className="flex gap-6 items-center">
+      <div className={`flex gap-6 items-center ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
         <Link to="/home" className="text-sm font-medium hover:text-red-500 transition-colors">Home</Link>
         <Link to="/watchlist" className="text-sm font-medium hover:text-red-500 transition-colors">
         Watchlist
