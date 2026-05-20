@@ -1,0 +1,25 @@
+# Build Output
+dist
+build
+out
+
+# Dependencies
+node_modules
+
+# Coverage
+coverage
+
+# Cache & Logs
+.husky
+.vite
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Public Assets
+public
+src/assets
+
+#Config Files
+package-lock.json
+pnpm-lock.yaml

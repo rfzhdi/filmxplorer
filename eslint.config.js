@@ -4,19 +4,35 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
+import prettier from 'eslint-plugin-prettier/recommended'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // Define File Global
+  globalIgnores(['dist', 'coverage']),
+  
+  // Konfigurasi JS dan TS
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  
+  // Konfigurasi Spesifik
   {
     files: ['**/*.{ts,tsx}'],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
-    ],
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      // React Hooks
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+    },
   },
+
+  prettier,
 ])
