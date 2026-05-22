@@ -1,15 +1,15 @@
-import React from 'react';
-import MovieCard from '../components/MovieCard';
-import { useSearchStore } from '../zustand/useSearchStore';
-import { useThemeStore } from '../zustand/useThemeStore';
-import { useMovies } from '../hooks/useMovies';
+import React from "react";
+import MovieCard from "../components/MovieCard";
+import { useSearchStore } from "../zustand/useSearchStore";
+import { useThemeStore } from "../zustand/useThemeStore";
+import { useMovies } from "../hooks/useMovies";
 
 const Home: React.FC = () => {
   // throw new Error("Cuma ngetes doang!");
   const { isDarkMode, toggleTheme } = useThemeStore();
   const { query, setQuery } = useSearchStore();
 
-  const { data:movies, isLoading, error, refetch } = useMovies(query);
+  const { data: movies, isLoading, error, refetch } = useMovies(query);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,32 +17,43 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen px-4 md:px-8 py-6 ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} transition-colors`}>
+    <div
+      className={`min-h-screen px-4 md:px-8 py-6 ${isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"} transition-colors`}
+    >
       {/* Navbar Section */}
       <header className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
-        <h1 className={`text-4xl font-bold bg-clip-text text-transparent! tracking-tighter transition-all duration-300 ${
-          isDarkMode 
-          ? 'bg-linear-to-r from-red-500 to-red-800' // Mode Gelap: Merah cerah ke merah tua
-          : 'bg-linear-to-r from-red-700 to-black'   // Mode Terang: Merah gelap ke hitam agar kontras
-          }`}>
-            FILMXPLORER
+        <h1
+          className={`text-4xl font-bold bg-clip-text text-transparent! tracking-tighter transition-all duration-300 ${
+            isDarkMode
+              ? "bg-linear-to-r from-red-500 to-red-800" // Mode Gelap: Merah cerah ke merah tua
+              : "bg-linear-to-r from-red-700 to-black" // Mode Terang: Merah gelap ke hitam agar kontras
+          }`}
+        >
+          FILMXPLORER
         </h1>
-        
+
         <div className="flex items-center gap-4">
           <button
-          onClick={toggleTheme}
-          className={`p-2.5 rounded-xl border transition-all duration-300 flex items-center justify-center shadow-sm ${
-            isDarkMode ? 'bg-gray-200 border-gray-700 text-yellow-400 hover:bg-gray-700 hover:shadow-yellow-500/10'
-            : 'bg-gray-800 border-gray-700 text-gray-600 hover:bg-gray-50 hover:shadow-md'
-          }`}
-          title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            onClick={toggleTheme}
+            className={`p-2.5 rounded-xl border transition-all duration-300 flex items-center justify-center shadow-sm ${
+              isDarkMode
+                ? "bg-gray-200 border-gray-700 text-yellow-400 hover:bg-gray-700 hover:shadow-yellow-500/10"
+                : "bg-gray-800 border-gray-700 text-gray-600 hover:bg-gray-50 hover:shadow-md"
+            }`}
+            title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            aria-label={
+              isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"
+            }
           >
             <span className="text-xl leading-none">
-              {isDarkMode ? '☀️' : '🌙'}
+              {isDarkMode ? "☀️" : "🌙"}
             </span>
           </button>
 
-          <form onSubmit={handleSearchSubmit} className="relative w-full md:w-96 group">
+          <form
+            onSubmit={handleSearchSubmit}
+            className="relative w-full md:w-96 group"
+          >
             <input
               type="text"
               placeholder="Search films..."
@@ -50,8 +61,8 @@ const Home: React.FC = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="absolute right-2 top-1.5 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-1.5 px-5 rounded-full transition-colors"
             >
               Search
@@ -82,8 +93,13 @@ const Home: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-20">
-              <p className="text-xl text-gray-500">Oops! Film "{query}" not found.</p>
-              <button onClick={() => refetch()} className="mt-4 text-red-500 hover:underline">
+              <p className="text-xl text-gray-500">
+                Oops! Film "{query}" not found.
+              </p>
+              <button
+                onClick={() => refetch()}
+                className="mt-4 text-red-500 hover:underline"
+              >
                 Back to popular films.
               </button>
             </div>

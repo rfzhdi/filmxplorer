@@ -5,6 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import prettier from 'eslint-plugin-prettier/recommended'
+import jsxA11y from 'eslint-plugin-jsx-a11y'
 
 export default defineConfig([
   // Define File Global
@@ -20,6 +21,7 @@ export default defineConfig([
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
+      'jsx-a11y': jsxA11y,
     },
     languageOptions: {
       globals: globals.browser,
@@ -31,8 +33,9 @@ export default defineConfig([
         'warn',
         { allowConstantExport: true },
       ],
+      ...jsxA11y.flatConfigs.recommended.rules, // Masukin rules a11y
     },
   },
 
   prettier,
-])
+]);
